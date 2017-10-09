@@ -15,7 +15,7 @@ ESPTOOL = esptool.py
 BAUD ?= 3000000
 
 # The name for the target project.
-TARGET = gpio
+TARGET = blink
 
 # The linker script used for the above linkier step.
 LD_SCRIPT = eagle.app.v6.ld
@@ -45,7 +45,7 @@ OBJCOPY = xtensa-lx106-elf-objcopy
 UNAME_S := $(shell uname -s)
 
 # Which modules (subdirectories) of the project to include in compiling.
-MODULES = ../../include ../../lib/uart user
+MODULES = ../../include ../../lib/uart ../../lib/easygpio user
 
 # The extra include directories. Absolute paths.
 EXTRA_INCDIR =
@@ -118,12 +118,12 @@ endef
 
 .PHONY: all checkdirs clean
 
-all: checkdirs $(TARGET_OUT) $(FW_FILE_1) $(FW_FILE_2) fix
+all: checkdirs $(TARGET_OUT) $(FW_FILE_1) $(FW_FILE_2)
 
 $(FW_FILE_1): $(TARGET_OUT)
 	$(vecho) "FW $@"
 	$(ESPTOOL) elf2image $< -o $(FW_BASE)/
-	
+
 $(FW_FILE_2): $(TARGET_OUT)
 	$(vecho) "FW $@"
 	$(ESPTOOL) elf2image $< -o $(FW_BASE)/
@@ -145,16 +145,13 @@ firmware:
 	$(Q) mkdir -p $@
 
 flash: $(FW_FILE_1)  $(FW_FILE_2)
+	$(Q) rm -rf ../include ../lib
 	$(ESPTOOL) -p $(ESPPORT) -b $(BAUD) write_flash $(FW_1) $(FW_FILE_1) $(FW_2) $(FW_FILE_2)
 
 test: flash
 	screen $(ESPPORT) 115200
 
 rebuild: clean all
-
-fix:
-	$(Q) rm -rf ../include
-	$(Q) rm -rf ../lib
 
 clean:
 	$(Q) rm -f $(APP_AR)

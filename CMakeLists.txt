@@ -19,20 +19,23 @@ message("Open SDK at $ENV{ESP_OPEN_SDK}")
 include_directories($ENV{ESP_OPEN_SDK}/sdk/include)
 
 include_directories(lib/uart/include)
+include_directories(lib/easygpio/include)
 include_directories(include)
 
 set(HEADER_FILES
         lib/uart/include/uart.h
         lib/uart/include/uart_register.h
+        lib/easygpio/include/easygpio/easygpio.h
         include/user_config.h
 
 )
 
 set(SOURCE_FILES
         examples/hello_world/user/main.c
-        examples/gpio/user/main.c
+        examples/blink/user/main.c
 
         lib/uart/uart.c
+        lib/easygpio/easygpio.c
 
 )
 

@@ -145,6 +145,7 @@ firmware:
 	$(Q) mkdir -p $@
 
 flash: $(FW_FILE_1)  $(FW_FILE_2)
+	$(Q) rm -rf ../include ../lib
 	$(ESPTOOL) -p $(ESPPORT) -b $(BAUD) write_flash $(FW_1) $(FW_FILE_1) $(FW_2) $(FW_FILE_2)
 
 test: flash

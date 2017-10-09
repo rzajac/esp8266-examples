@@ -25,7 +25,7 @@ void ICACHE_FLASH_ATTR sys_init_done(void)
 
 void ICACHE_FLASH_ATTR user_init()
 {
-  // We don't need WiFi for this simple examples.
+  // We don't need WiFi for this simple example.
   wifi_set_opmode_current(NULL_MODE);
   wifi_station_disconnect();
 

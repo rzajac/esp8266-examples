@@ -9,13 +9,13 @@ By default Makefile:
 - uses `/dev/ttyUSB0` for USB to serial communication
 - assumes `esptool.py` exists in user `$PATH`
 
-```
-$ make
-$ make flash
-```
 ## Usage.
 
-See example [main.c](../example/main.c).
+Change directory to one of the examples and execute:
+
+```
+$ make clean && make && make flash 
+```
 
 ## License.
 

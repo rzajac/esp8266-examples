@@ -17,21 +17,40 @@
 #include <user_interface.h>
 #include <uart.h>
 #include <osapi.h>
+#include <easygpio/easygpio.h>
 
-void ICACHE_FLASH_ATTR sys_init_done(void)
+#define BLINK_PIN 2
+
+static os_timer_t timer;
+
+void ICACHE_FLASH_ATTR blink(void *arg)
 {
-  os_printf("Hello World!\n");
+  uint8_t flag = (uint8_t) ((uint32_t) arg);
+
+  os_printf("LED: %d\n", flag);
+  easygpio_outputSet(BLINK_PIN, flag);
+
+  os_timer_disarm(&timer);
+  os_timer_setfn(&timer, (os_timer_func_t *)blink, (void *) (flag == 1 ? 0 : 1));
+  os_timer_arm(&timer, 1000, false);
 }
 
 void ICACHE_FLASH_ATTR user_init()
 {
-  // We don't need WiFi for this simple examples.
-  wifi_set_opmode_current(NULL_MODE);
+  // We don't need WiFi for this example.
+  wifi_station_set_auto_connect(false);
   wifi_station_disconnect();
-
-  // Set callback when system is done initializing.
-  system_init_done_cb(sys_init_done);
+  wifi_softap_dhcps_stop();
 
   // Initialize UART.
   uart_init(BIT_RATE_74880, BIT_RATE_74880);
+
+  // Initialize GPIOs
+  gpio_init();
+
+  easygpio_pinMode(BLINK_PIN, EASYGPIO_NOPULL, EASYGPIO_OUTPUT);
+
+  os_timer_disarm(&timer);
+  os_timer_setfn(&timer, (os_timer_func_t *)blink, 0);
+  os_timer_arm(&timer, 1000, false);
 }
