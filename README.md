@@ -17,6 +17,12 @@ Change directory to one of the examples and execute:
 $ make clean && make && make flash 
 ```
 
+To see the output:
+
+```
+$ miniterm.py /dev/ttyUSB0 74880
+```
+
 ## License.
 
 [Apache License Version 2.0](LICENSE) unless stated otherwise.

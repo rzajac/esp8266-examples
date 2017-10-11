@@ -45,7 +45,7 @@ OBJCOPY = xtensa-lx106-elf-objcopy
 UNAME_S := $(shell uname -s)
 
 # Which modules (subdirectories) of the project to include in compiling.
-MODULES = ../../include ../../lib/uart ../../lib/easygpio user
+MODULES = include lib/uart user
 
 # The extra include directories. Absolute paths.
 EXTRA_INCDIR =
@@ -145,7 +145,6 @@ firmware:
 	$(Q) mkdir -p $@
 
 flash: $(FW_FILE_1)  $(FW_FILE_2)
-	$(Q) rm -rf ../include ../lib
 	$(ESPTOOL) -p $(ESPPORT) -b $(BAUD) write_flash $(FW_1) $(FW_FILE_1) $(FW_2) $(FW_FILE_2)
 
 test: flash

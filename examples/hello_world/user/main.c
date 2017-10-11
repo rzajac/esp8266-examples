@@ -15,8 +15,8 @@
  */
 
 #include <user_interface.h>
-#include <uart.h>
 #include <osapi.h>
+#include <uart.h>
 
 void ICACHE_FLASH_ATTR sys_init_done(void)
 {
@@ -27,11 +27,10 @@ void ICACHE_FLASH_ATTR user_init()
 {
   // We don't need WiFi for this simple example.
   wifi_set_opmode_current(NULL_MODE);
-  wifi_station_disconnect();
-
-  // Set callback when system is done initializing.
-  system_init_done_cb(sys_init_done);
 
   // Initialize UART.
   uart_init(BIT_RATE_74880, BIT_RATE_74880);
+
+  // Set callback when system is done initializing.
+  system_init_done_cb(sys_init_done);
 }

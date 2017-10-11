@@ -15,7 +15,7 @@ ESPTOOL = esptool.py
 BAUD ?= 3000000
 
 # The name for the target project.
-TARGET = hello_world
+TARGET = gpio_itr
 
 # The linker script used for the above linkier step.
 LD_SCRIPT = eagle.app.v6.ld
@@ -123,7 +123,7 @@ all: checkdirs $(TARGET_OUT) $(FW_FILE_1) $(FW_FILE_2)
 $(FW_FILE_1): $(TARGET_OUT)
 	$(vecho) "FW $@"
 	$(ESPTOOL) elf2image $< -o $(FW_BASE)/
-	
+
 $(FW_FILE_2): $(TARGET_OUT)
 	$(vecho) "FW $@"
 	$(ESPTOOL) elf2image $< -o $(FW_BASE)/

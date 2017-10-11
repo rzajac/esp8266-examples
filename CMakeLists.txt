@@ -26,13 +26,16 @@ set(HEADER_FILES
         lib/uart/include/uart.h
         lib/uart/include/uart_register.h
         lib/easygpio/include/easygpio/easygpio.h
-        include/user_config.h
 
+        examples/blink/include/user_config.h
+        examples/gpio_itr/include/user_config.h
+        examples/hello_world/include/user_config.h
 )
 
 set(SOURCE_FILES
-        examples/hello_world/user/main.c
         examples/blink/user/main.c
+        examples/gpio_itr/user/main.c
+        examples/hello_world/user/main.c
 
         lib/uart/uart.c
         lib/easygpio/easygpio.c
